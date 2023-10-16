@@ -23,15 +23,15 @@ public class UserController {
     var user = this.userRepository.findByUsername(userModel.getUsername());
     if (user != null) {
       System.out.println("Usuário já existe");
-      // mensagem de erro
-      // status code
+
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe");
     }
     // criptografia de senha
-    var passwordHashred = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
+    var passwordHashed = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
 
-    userModel.setPassword(passwordHashred);
+    userModel.setPassword(passwordHashed);
     var userCreated = userRepository.save(userModel);
     return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
   }
+
 }
